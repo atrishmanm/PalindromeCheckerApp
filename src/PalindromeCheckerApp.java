@@ -1,27 +1,31 @@
 import java.util.Scanner;
+
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Input : ");
+        System.out.print("Enter text: "); // Helpful prompt
         String input = scanner.nextLine();
-                String normalized = input.replaceAll("\\s+", "").toLowerCase();
-        boolean result = isPalindrome(normalized);
 
+        boolean result = isPalindrome(input);
+
+        System.out.println("Input : " + input);
         System.out.println("Is Palindrome? : " + result);
 
         scanner.close();
     }
 
     public static boolean isPalindrome(String str) {
-        if (str.length() <= 1) {
-            return true;
-        }
+        String normalized = str.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
 
-        if (str.charAt(0) == str.charAt(str.length() - 1)) {
-            return isPalindrome(str.substring(1, str.length() - 1));
-        }
+        if (normalized.isEmpty()) return true;
 
-        return false;
+        int n = normalized.length();
+        for (int i = 0; i < n / 2; i++) {
+            if (normalized.charAt(i) != normalized.charAt(n - 1 - i)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
