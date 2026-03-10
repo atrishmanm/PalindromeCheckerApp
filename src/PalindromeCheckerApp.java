@@ -1,25 +1,54 @@
+import java.util.Scanner;
 import java.util.Stack;
 
 public class PalindromeCheckerApp {
-  public static void main(String[] args) {
-    String input = "noon";
 
-    Stack<Character> stack = new Stack<>();
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-    for (char c : input.toCharArray()) {
-      stack.push(c);
+        System.out.print("Input : ");
+        String input = scanner.nextLine();
+
+
+        PalindromeStrategy1 strategy = new StackStrategy1();
+
+        long startTime = System.nanoTime();
+
+        boolean result = strategy.check(input);
+
+        long endTime = System.nanoTime();
+
+        long duration = endTime - startTime;
+
+        System.out.println("Is Palindrome? : " + result);
+        System.out.println("Execution Time : " + duration + " ns");
+
+        scanner.close();
     }
-
-    boolean isPalindrome = true;
-
-    for (char c : input.toCharArray()) {
-      if (c != stack.pop()) {
-        isPalindrome = false;
-        break;
-      }
-    }
-
-    System.out.println("Input : " + input);
-    System.out.println("Is Palindrome? : " + isPalindrome);
-  }
 }
+
+interface PalindromeStrategy1 {
+    boolean check(String input);
+}
+
+class StackStrategy1 implements PalindromeStrategy1 {
+    @Override
+    public boolean check(String input) {
+        if (input == null || input.isEmpty()) return true;
+
+        String normalized = input.toLowerCase();
+        Stack<Character> stack = new Stack<>();
+
+        for (char c : normalized.toCharArray()) {
+            stack.push(c);
+        }
+
+        for (char c : normalized.toCharArray()) {
+            if (c != stack.pop()) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
