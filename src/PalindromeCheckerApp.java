@@ -1,27 +1,27 @@
-import java.util.LinkedList;
-
+import java.util.Scanner;
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
-        String input = "level";
-        LinkedList<Character> list = new LinkedList<>();
+        Scanner scanner = new Scanner(System.in);
 
-        for (char c : input.toCharArray()) {
-            list.add(c);
+        System.out.print("Input : ");
+        String input = scanner.nextLine();
+                String normalized = input.replaceAll("\\s+", "").toLowerCase();
+        boolean result = isPalindrome(normalized);
+
+        System.out.println("Is Palindrome? : " + result);
+
+        scanner.close();
+    }
+
+    public static boolean isPalindrome(String str) {
+        if (str.length() <= 1) {
+            return true;
         }
 
-        boolean isPalindrome = true;
-
-        while (list.size() > 1) {
-            char head = list.removeFirst();
-            char tail = list.removeLast();
-
-            if (head != tail) {
-                isPalindrome = false;
-                break;
-            }
+        if (str.charAt(0) == str.charAt(str.length() - 1)) {
+            return isPalindrome(str.substring(1, str.length() - 1));
         }
 
-        System.out.println("Input : " + input);
-        System.out.println("Is Palindrome? : " + isPalindrome);
+        return false;
     }
 }
